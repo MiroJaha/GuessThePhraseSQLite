@@ -2,6 +2,8 @@ package com.example.guessthephrase2
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -12,7 +14,28 @@ class AddNewPhrase: AppCompatActivity() {
     private val dbHelper by lazy { DBHelper(applicationContext) }
     private lateinit var saveButton: Button
     private lateinit var phraseEntry: EditText
-    private lateinit var backButton: Button
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        val item=menu?.getItem(0)
+        item!!.title="Play Game"
+        item.setIcon(R.drawable.game_icon)
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.addNewPhrase -> {
+                startActivity(Intent(this,MainActivity::class.java))
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,11 +43,6 @@ class AddNewPhrase: AppCompatActivity() {
 
         saveButton= findViewById(R.id.button)
         phraseEntry= findViewById(R.id.PhraseEntry)
-        backButton= findViewById(R.id.backButton)
-
-        backButton.setOnClickListener{
-            startActivity(Intent(this,MainActivity::class.java))
-        }
 
         saveButton.setOnClickListener{
             if (phraseEntry.text.isNotBlank()){

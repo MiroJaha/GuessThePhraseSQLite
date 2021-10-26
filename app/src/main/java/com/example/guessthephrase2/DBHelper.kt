@@ -9,17 +9,20 @@ class DBHelper(
     context: Context?,
     name: String?= "GuessThePhrase",
     factory: SQLiteDatabase.CursorFactory?= null,
-    version: Int= 1,
-    val tableName: String= "phrases"
+    version: Int= 2,
+    private val tableName: String= "phrases"
 ) : SQLiteOpenHelper(context, name, factory, version) {
 
     private val sqLiteDatabase: SQLiteDatabase= writableDatabase
 
     override fun onCreate(sql: SQLiteDatabase?) {
-        sql?.execSQL("create table $tableName (Phrase Text)" )
+        sql?.execSQL("create table $tableName (PK INTEGER PRIMARY KEY AUTOINCREMENT, Phrase Text)" )
     }
 
-    override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {}
+    override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
+        p0?.execSQL("DROP TABLE IF EXISTS $tableName")
+        onCreate(p0)
+    }
 
     fun addNewPhrase(phrase: String): Long{
         val contentValue= ContentValues()

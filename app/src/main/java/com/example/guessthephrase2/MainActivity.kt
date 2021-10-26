@@ -7,6 +7,8 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -40,6 +42,27 @@ class MainActivity : AppCompatActivity() {
 
     private val dbHelper by lazy { DBHelper(applicationContext) }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        val item=menu?.getItem(0)
+        item!!.title="Add New Phrase"
+        item.setIcon(R.drawable.ic_baseline_add_24)
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.addNewPhrase -> {
+                startActivity(Intent(this,AddNewPhrase::class.java))
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     private fun show(list:ArrayList<Data>){
 
@@ -99,13 +122,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        AlertDialog.Builder(this)
-            .setTitle("Do You Want to Add New Phrase or Continue to The Game")
-            .setPositiveButton("Add New Phrase"){_,_ -> startActivity(Intent(this,AddNewPhrase::class.java))}
-            .setNegativeButton("Play The Game"){alert,_ -> alert.cancel()}
-            .show()
-
 
         sharedPreferences = this.getSharedPreferences(
             getString(R.string.preference_file_key), Context.MODE_PRIVATE)

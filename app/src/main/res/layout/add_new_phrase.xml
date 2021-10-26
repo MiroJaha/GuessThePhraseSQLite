@@ -15,7 +15,7 @@
         android:layout_margin="24dp"
         android:hint="Enter Phrase To Save"
         android:inputType="textPersonName"
-
+        app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,20 +24,11 @@
         android:id="@+id/button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Save"
         android:layout_margin="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/backButton"
+        android:text="Save"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PhraseEntry" />
 
-    <Button
-        android:id="@+id/backButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Back"
-        android:layout_margin="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
